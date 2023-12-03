@@ -20,7 +20,7 @@ class PromiseQueue {
 async function readConfig() {
   try {
     const configFile = await fs.readFile(
-      path.join(__dirname, "config.json"),
+      path.join(__dirname,"..","..","watcher-ftp", "config.json"),
       "utf-8"
     );
     return JSON.parse(configFile);
