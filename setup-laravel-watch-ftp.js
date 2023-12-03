@@ -20,7 +20,20 @@ async function createConfigFile() {
   const watcherFtpDir = path.join(__dirname, '..', '..', 'watcher-ftp');
   const configFilePath = path.join(watcherFtpDir, 'config.json');
 
-  const configContent = JSON.stringify({}, null, 2);
+  const configContent = JSON.stringify({
+    "ftp": {
+      "host": "",
+      "port": 21,
+      "user": "",
+      "password": ""
+    },
+    "localFolder": "",
+    "remoteFolder": "/",
+    "chokidarOptions": {
+      "ignored": "(^|[/\\\\])\\..*",
+      "persistent": true
+    }
+  }, null, 2);
 
   try {
     await fs.writeFile(configFilePath, configContent);
@@ -30,8 +43,9 @@ async function createConfigFile() {
   }
 }
 
+
 async function addWatchScriptToPackageJson() {
-  const projectPackageJsonPath = path.join(process.cwd(), 'package.json');
+  const projectPackageJsonPath = path.join(process.cwd(),'..','..', 'package.json');
   const watchScript = '"watch": "node ./node_modules/laravel-watch-ftp/main.js"';
 
   try {
