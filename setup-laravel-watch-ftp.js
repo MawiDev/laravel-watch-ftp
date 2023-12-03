@@ -46,7 +46,7 @@ async function createConfigFile() {
 
 async function addWatchScriptToPackageJson() {
   const projectPackageJsonPath = path.join(process.cwd(),'..','..', 'package.json');
-  const watchScript = '"watch": "node ./node_modules/laravel-watch-ftp/main.js"';
+  const watchScript = 'node ./node_modules/laravel-watch-ftp/main.js';
 
   try {
     const projectPackageJson = require(projectPackageJsonPath);
