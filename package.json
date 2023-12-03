@@ -1,6 +1,6 @@
 {
   "name": "laravel-watch-ftp",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "watcher for laravel - ftp server.",
   "main": "main.js",
   "scripts": {
