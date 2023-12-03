@@ -1,11 +1,14 @@
 {
   "name": "laravel-watch-ftp",
   "version": "1.0.0",
-  "description": "",
+  "description": "watcher for laravel - ftp server.",
   "main": "main.js",
   "scripts": {
     "watch": "node main.js"
   },
+  "bin": {
+    "laravel-watch-ftp": "main.js"
+  },  
   "keywords": [],
   "author": "",
   "license": "ISC",
