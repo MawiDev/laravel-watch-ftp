@@ -29,6 +29,8 @@ async function readConfig() {
   }
 }
 
+// ... (codice esistente)
+
 async function connect() {
   const client = new ftp.Client();
   const queue = new PromiseQueue();
@@ -48,12 +50,44 @@ async function connect() {
 
     console.log("Connected to FTP server successfully.");
 
+    // Aggiungi la sincronizzazione iniziale qui
+    await syncLocalToRemote(client, queue, config);
+
     watchDirectory(client, queue, config);
     setupTerminationHandlers(client);
   } catch (err) {
     handleConnectionError(err);
   }
 }
+
+// Funzione per la sincronizzazione iniziale tra locale e remoto
+async function syncLocalToRemote(client, queue, config) {
+  try {
+    // Verifica se la directory locale esiste
+    const localFolderExists = await fs.access(config.localFolder).then(() => true).catch(() => false);
+
+    if (!localFolderExists) {
+      console.log(`Local folder does not exist: ${config.localFolder}`);
+      return;
+    }
+
+    const localFiles = await fs.readdir(config.localFolder);
+    for (const file of localFiles) {
+      const localFilePath = path.join(config.localFolder, file);
+      if ((await fs.stat(localFilePath)).isFile()) {
+        const remoteFilePath = path.join("/", file);
+        const remoteDir = path.dirname(remoteFilePath);
+        await client.ensureDir(remoteDir);
+        console.log(`Uploading initial file: ${remoteFilePath}`);
+        await queue.enqueue(() => client.uploadFrom(localFilePath, remoteFilePath));
+      }
+    }
+    console.log("Initial synchronization completed.");
+  } catch (err) {
+    console.error("Error during initial synchronization:", err);
+  }
+}
+
 
 function setupTerminationHandlers(client) {
   process.on("SIGINT", async () => {
@@ -75,7 +109,8 @@ function setupTerminationHandlers(client) {
 function watchDirectory(client, queue, config) {
   
   const watcher = chokidar.watch(config.localFolder, {
-    ...config.chokidarOptions
+    ...config.chokidarOptions,
+    ignoreInitial: true,
   });
 
   console.log(`Waiting for changes in the directory: ${config.localFolder}`);

@@ -27,7 +27,7 @@ async function createConfigFile() {
       "user": "",
       "password": ""
     },
-    "localFolder": "",
+    "localFolder": "./",
     "remoteFolder": "/",
     "chokidarOptions": {
       "ignored": [
