@@ -22,9 +22,31 @@ jobs:
         run: npm install
 
       - name: Copy config file
-        run: cp ./node_modules/laravel-watch-ftp/example.config.json ./config.json
+        run: cp ./example.config.json ./config.json
 
       - name: Run script
-        run: npm start        
+        run: npm start
+
+  run-script-windows:
+    runs-on: windows-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Copy config file
+        run: Copy-Item .\example.config.json .\config.json
+
+      - name: Run script
+        run: npm start
+      
         env: 
             NPM_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
