@@ -39,12 +39,18 @@ async function createConfigFile() {
         "**/vendor/**",
         "artisan",
         "composer.json",
-        "composer-lock.json",
         "phpunit.xml",
-        "postcss.config.json",
+        "postcss.config.js",
         "README.md",
         "tailwind.config.js",
-        "vite.config.js"
+        "vite.config.js",
+        "composer.lock",
+        ".env",
+        ".env.example",
+        ".gitattributes",
+        "**/.gitignore/**",
+        ".editorconfig",
+        "*.sql"
       ],
       "persistent": true
     }
