@@ -74,7 +74,16 @@ function setupTerminationHandlers(client) {
 }
 
 function watchDirectory(client, queue, config) {
-  const watcher = chokidar.watch(config.localFolder, config.chokidarOptions);
+  const ignoredPaths = [
+    path.join(config.localFolder, 'node_modules'),
+    path.join(config.localFolder, '.*'), 
+    path.join(config.localFolder, 'watcher-ftp')  
+  ];
+
+  const watcher = chokidar.watch(config.localFolder, {
+    ignored: ignoredPaths,
+    ...config.chokidarOptions
+  });
 
   console.log(`Waiting for changes in the directory: ${config.localFolder}`);
 
@@ -92,6 +101,7 @@ function watchDirectory(client, queue, config) {
       handleFolderDelete("Deleted", dirPath, client, queue, config)
     );
 }
+
 
 async function handleFileDelete(action, filePath, client, queue, config) {
   console.log(`${action}: ${filePath}`);
