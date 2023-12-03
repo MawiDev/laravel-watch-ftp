@@ -4,7 +4,7 @@
   "description": "watcher for laravel - ftp server.",
   "main": "main.js",
   "scripts": {
-    "start": "node main.js"
+    "watch": "node main.js"
   },
   "bin": {
     "laravel-watch-ftp": "main.js"
