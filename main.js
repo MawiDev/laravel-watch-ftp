@@ -2,7 +2,6 @@ const ftp = require("basic-ftp");
 const fs = require("fs").promises;
 const path = require("path");
 const chokidar = require("chokidar");
-const { config } = require("process");
 
 class PromiseQueue {
   constructor() {
@@ -20,7 +19,7 @@ class PromiseQueue {
 async function readConfig() {
   try {
     const configFile = await fs.readFile(
-      path.join(__dirname,"..","..","watcher-ftp", "config.json"),
+      path.join(__dirname, "..", "..", "watcher-ftp", "config.json"),
       "utf-8"
     );
     return JSON.parse(configFile);
@@ -74,14 +73,8 @@ function setupTerminationHandlers(client) {
 }
 
 function watchDirectory(client, queue, config) {
-  const ignoredPaths = [
-    path.join(config.localFolder, 'node_modules'),
-    path.join(config.localFolder, '.*'), 
-    path.join(config.localFolder, 'watcher-ftp')  
-  ];
-
+  
   const watcher = chokidar.watch(config.localFolder, {
-    ignored: ignoredPaths,
     ...config.chokidarOptions
   });
 

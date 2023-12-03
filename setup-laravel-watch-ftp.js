@@ -30,7 +30,22 @@ async function createConfigFile() {
     "localFolder": "",
     "remoteFolder": "/",
     "chokidarOptions": {
-      "ignored": "(^|[/\\\\])\\..*",
+      "ignored": [
+        "(^|[/\\\\])\\..*",
+        "**/node_modules/**",
+        "package.json",
+        "package-lock.json",
+        "watcher-ftp",
+        "**/vendor/**",
+        "artisan",
+        "composer.json",
+        "composer-lock.json",
+        "phpunit.xml",
+        "postcss.config.json",
+        "README.md",
+        "tailwind.config.js",
+        "vite.config.js"
+      ],
       "persistent": true
     }
   }, null, 2);
