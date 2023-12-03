@@ -1,4 +1,4 @@
-name: Run Laravel Watch FTP
+name: Publish to npm
 
 on:
   push:
@@ -6,7 +6,7 @@ on:
       - main
 
 jobs:
-  run-script:
+  publish:
     runs-on: ubuntu-latest
 
     steps:
@@ -21,12 +21,9 @@ jobs:
       - name: Install dependencies
         run: npm install
 
-      - name: Copy config file
-        run: cp ./example.config.json ./config.json
+      - name: Set up npm
+        run: echo "//registry.npmjs.org/:_authToken=${{ secrets.NPM_TOKEN }}" > ~/.npmrc
 
-      - name: Run script
-        run: npm run watch
+      - name: Publish to npm
+        run: npm publish --access public
 
-
-        env: 
-            NPM_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
