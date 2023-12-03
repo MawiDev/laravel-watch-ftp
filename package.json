@@ -4,12 +4,13 @@
   "description": "watcher for laravel - ftp server.",
   "main": "main.js",
   "scripts": {
-    "watch": "node main.js"
+    "watch": "node main.js",
+    "postinstall": "node setup-laravel-watch-ftp.js"
   },
   "bin": {
     "laravel-watch-ftp": "main.js"
   },  
-  "keywords": [],
+  "keywords": ["laravel", "ftp", "watcher"],
   "author": "",
   "license": "ISC",
   "dependencies": {
